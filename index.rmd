@@ -1,5 +1,5 @@
 ---
-title: "Music Sophistication and Language Sophistication"
+title: "Musical and Language Sophistication"
 author: "Fleetwood Mac Group"
 output:
   flexdashboard::flex_dashboard:
@@ -8,80 +8,238 @@ output:
     orientation: columns
   html_document:
     df_print: paged
+  css: 
+  - "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
 ---
 
 ```{r setup, include=FALSE}
 library(ggplot2)
+library(ggExtra)
 library(plotly)
 library(plyr)
 library(flexdashboard)
+library(forcats)
 
 # Make some noisily increasing data
 set.seed(955)
-dat <- data.frame(cond = rep(c("A", "B"), each=10),
-                  xvar = 1:20 + rnorm(20,sd=3),
-                  yvar = 1:20 + rnorm(20,sd=3))
 
-df_results = read.csv("survey_results_for_analysis_11012024.csv")
+df_results = read.csv("survey_results_for_analysis_20240118.csv")
+df_songs = read.csv("song_data_20240118.csv")
+df_songs_eng <- subset(df_songs, language == "en")
 
 library(dplyr)
 
 df_results <- df_results %>%
   mutate(Language = gsub(" ", "", toupper(Language)))
+
+classify_language <- function(language) {
+  if (language %in% c("BULGARIAN", "CZECH", "POLISH", "RUSSIAN")) {
+    return("Slavic")
+  } else if (language %in% c("DUTCH", "ENGLISH", "GERMAN")) {
+    return("Germanic")
+  } else if (language %in% c("FRENCH", "ITALIAN", "SPANISH", "ROMANIAN")) {
+    return("Romance")
+  } else if (language %in% c("CHINESE")) {
+    return("Chinese")
+  } else if (language %in% c("HEBREW", "LATVIAN", "TURKISH")) {
+    return("Other Languages")
+  } else {
+    return("Unknown Group")
+  }
+}
+
+df_results <- df_results %>%
+  mutate(LanguageGroup = sapply(Language, classify_language))
+
+
+
 ```
+
 
 Sidebar {.sidebar}
 =====================================
+<div style="text-align:center; margin-top: 20px; margin-bottom: 20px;">
+  <i class="fas fa-music fa-5x" style="margin-top: 10px; margin-bottom: 10px;"></i>
+  <i class="fas fa-book fa-5x" style="margin-left: 20px; margin-top: 10px; margin-bottom: 10px;"></i>
+</div>
 
-```{r}
-print ("Here we have some basic information about the project")
-```
+
+<b>Is there a correlation between our musical sophistication and the linguistic characteristics of the songs that we listen to? Does our English proficiency influence what kind of lyrics we put on our playlists?</b>
+
+In our research, we aimed to examine these questions by conducting an online survey, where we asked participants about their native language, musical background, and English proficiency, among others. While the results may have not provided us with specific correlation in many of the examined areas, we have nevertheless gathered a significant number of responses, that allowed us to draw certain conclusions on the topic.
+
+In this portfolio, you will be able to find the results of our research. The discussion on the results can be found in the second tab. Further, we have included general statistics from survey, to provide the relevant context for the results. Lastly, the portfolio comprises additional graphs, that are aimed at sparking additional interest in the research at issue.
 
 Main page
 =======================================================================
 
 
-Column {data-width=600}
+Column {.tabset data-width=600}
 -----------------------------------------------------------------------
 
-### Selecting the English proficiency groups {data-height=100}
 
-Here you will be able to filter the data on the chart by the english proficiency. 
-
+### Language groups
+Musical sophistication (Gold MSI score) vs average sentiment of the lyrics from the OnRepeat playlist
 ```{r}
 
- 
+
+# Create the scatter plot
+p <- ggplot(df_results, aes(x = SC0, y = sentiment_mean, color = LanguageGroup, shape = factor(English.proficiency, levels = c("Moderate", "Advanced", "Native-level")))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed", color = "black", aes(group = 1)) +
+  labs(x = "Gold MSI score", y = "Average lyrics sentiment") +
+  labs(shape = "English Proficiency", color = "Language") +
+  theme_bw() 
+  
+# Extract correlation and p-value
+correlation <- cor(df_results$SC0, df_results$sentiment_mean)
+p_value <- summary(lm(sentiment_mean ~ SC0, data = df_results))$coefficients[2, 4]
+
+# Add p-value and correlation text
+text_annotation <- paste("Correlation:", round(correlation, 3))
+text_annotation2 <- paste("P-value:", format(p_value, scientific = TRUE, digits = 2))
+
+text_x <- max(df_results$SC0)
+text_y <- min(df_results$sentiment_mean)
+
+p <- p +
+  ggplot2::annotate("text", x = max(df_results$SC0), y = min(df_results$sentiment_mean), label = text_annotation, hjust = 1, vjust = -1, parse = TRUE)+
+
+ggplot2::annotate("text", x = max(df_results$SC0), y = min(df_results$sentiment_mean), label = text_annotation2, hjust = 1, vjust = 0.2, parse = TRUE)
+  
+
+# Modify legends
+p <- p + guides(
+  shape = guide_legend(title = "English Proficiency"),
+  color = guide_legend(title = "Language")
+)
+
+# Adjust legend position and size
+# Adjust legend position and size
+p <- p + theme(
+  legend.position = "bottom",  # You can change the position (e.g., "top", "right", "left")
+  legend.box = "vertical",   # Use "vertical" to make it narrower
+  legend.margin = margin(t = 0, r = 0, b = 0, l = 0),  # Adjust margin for better fit
+  legend.key.size = unit(0.5, "lines"),  # Adjust the size of the legend key
+  legend.text = element_text(size = 8)  # Adjust the size of the legend text
+)
+
+# Print or save the plot
+p
+
+
+
+
 ```
 
-### Our main chart, displaying the main findings {data-height=900}
-
+### All languages
+Musical sophistication (Gold MSI score) vs average sentiment of the lyrics from the On Repeat playlist 
 ```{r}
- plot_title <- paste("Scatter plot for", " sentiment")
+
+# Create the scatter plot
+p <- ggplot(df_results, aes(x = SC0, y = sentiment_mean, color = Language, shape = factor(English.proficiency, levels = c("Moderate", "Advanced", "Native-level")))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, linetype = "dashed", color = "black", aes(group = 1)) +
+  labs(x = "Gold MSI score", y = "Average lyrics sentiment") +
+  labs(shape = "English Proficiency", color = "Language") +
+  theme_bw() 
   
-  # Create the scatter plot
-  p <- ggplot(df_results, aes(x = SC0, y = sentiment_mean, shape =as.factor(English.proficiency), color=Language )) +
-    geom_point() +
-    ggtitle(plot_title)
+# Extract correlation and p-value
+correlation <- cor(df_results$SC0, df_results$sentiment_mean)
+p_value <- summary(lm(sentiment_mean ~ SC0, data = df_results))$coefficients[2, 4]
+
+# Add p-value and correlation text
+text_annotation <- paste("Correlation:", round(correlation, 3))
+text_annotation2 <- paste("P-value:", format(p_value, scientific = TRUE, digits = 2))
+p <- p +
+  ggplot2::annotate("text", x = max(df_results$SC0), y = min(df_results$sentiment_mean), label = text_annotation, hjust = 1, vjust = -1, parse = TRUE)+
+ggplot2::annotate("text", x = max(df_results$SC0), y = min(df_results$sentiment_mean), label = text_annotation2, hjust = 1, vjust = 0.2, parse = TRUE)
+
   
-  # Print or save the plot (you can customize this based on your needs)
-  ggplotly(p)
+
+# Modify legends
+p <- p + guides(
+  shape = guide_legend(title = "English Proficiency"),
+  color = guide_legend(title = "Language")
+)
+
+# Adjust legend position and size
+# Adjust legend position and size
+p <- p + theme(
+  legend.position = "bottom",  # You can change the position (e.g., "top", "right", "left")
+  legend.box = "vertical",   # Use "vertical" to make it narrower
+  legend.margin = margin(t = 0, r = 0, b = 0, l = 0),  # Adjust margin for better fit
+  legend.key.size = unit(0.5, "lines"),  # Adjust the size of the legend key
+  legend.text = element_text(size = 8)  # Adjust the size of the legend text
+)
+
+# Print or save the plot
+p
+
+
 ```
-
-
 
 Column {data-width=400}
 -----------------------------------------------------------------------
 
-### Bar chart with data per English proficiency
+### Lyrics readability vs the English proficiency
 
 ```{r}
-print ("Here we'll have another interesting graph")
+df_results$English.proficiency <- factor(df_results$English.proficiency, levels = c("Moderate", "Advanced", "Native-level"))
+
+p <-  ggplot(df_results, aes(x = linsear_write_formula_mean, y = English.proficiency, fill=English.proficiency, color=English.proficiency)) +
+  geom_violin() +
+  
+  geom_boxplot(width = 0.1, fill = "white", color = "black") +  # Add boxplots for better visualization
+  labs(title = "",
+       x = "Average Linsear Write readability metric of the lyrics",
+       y = "English Proficiency") +
+  theme_minimal()  +
+  theme(legend.position="none") 
+  
+
+p
 ```
 
-### Data Table
+### Countries of study participants
 
-```{r}
-print ("Here we'll have some raw data")
+```{r, echo=FALSE,message=FALSE,fig.keep='all'}
+
+# Load required libraries
+library(sf)
+library(leaflet)
+library(dplyr)
+
+
+# Sample GeoJSON file containing country boundaries
+# You can replace "world_countries.geojson" with the path to your GeoJSON file
+geojson_file <- "geojsoncountryborders.json"
+
+# Read GeoJSON file
+
+world_sf <- st_read(geojson_file,quiet = TRUE)
+
+# Merge the dataset with the GeoJSON data
+merged_data <- merge(world_sf, df_results %>% group_by(Country) %>% summarise(count = n()), by.x = "name", by.y = "Country", all.x = TRUE)
+
+# Create a color scale with breaks
+color_palette <- colorNumeric("Greens", domain = merged_data$count, na.color = "gray")
+
+# Plot choropleth map
+p <-leaflet(merged_data) %>%
+  setView(lng = 60, lat = 35, zoom = 2) %>%
+  addTiles() %>%
+  addPolygons(
+    fillColor = ~color_palette(count),
+    fillOpacity = 0.7,
+    color = "white",
+    weight = 1,
+    popup = ~paste(name, ": ", ifelse(is.na(count), 0, count), " participants")
+  ) %>%
+  addLegend("bottomright", pal = color_palette, values = ~count, title = "Participants")
+
+p
+
 ```
 
 Background
@@ -93,49 +251,332 @@ Column
 
 ### Introduction
 
-```{r}
-print ("General introduction")
-```
+Songs that we listen to every day do not only stimulate our mood, and help as get through our daily chores. They tell us stories, to which we can relate, describe events that we dream of, or simply circulate around words that define our life routines. The lyrics play an integral part in our daily musical sphere. 
+While there is no doubt that the character of the lyrics differs between artists, as well as genres, a question emerges, whether their sophistication has a certain correlation on the "other" side. Namely, if the listeners' own musical sophistication, and other characteristics (such as background, English proficiency) are connected to the character of the lyrics of the songs they listen to most often.
+The studies on the musical and language sophistication have not yet been developed extensively, with most of the research focusing on more general relations within the area of music culture - e.g. the one between the music listening and cultural adaptation in host states (provide citation). Thus, our research had as its objective the provision of a valuable point for discussion.
 
 ### Methodology
 
-```{r}
-print ("Detailing the process of the experiment")
-```
+The research was based on a survey, to which we collected 55 complete responses. While the number of the total participants was almost twice as high, lack of response to one of the questions already precluded them from being taken into account.
+To gather the data that would allow us to measure numerous variables connected to the musical sophistication and language, we have asked the participants of our survey some general questions concerning their personal information -  their age group, native language, English proficiency, as well as home country. Further, they were asked about their musical sophistication, with the use of inquiries selected from Gold MSI. Additionally, we asked each participant to share a link to their Spotify On Repeat playlist. In order to study the data, we have used Spotify and Genius APIs, and a number of indices for the measurement of the readability of the lyrics - Flesch Reading Ease, Flesch Kincaid Grade Level, Gunning Fog Index, Smog Index, Automated Readability Index, Coleman Liau Index, Linsear Write, Dale Chall Readability formula, and McAlpine EFLAW Readability Score. Due to the limitations of these indices, the only songs we could measure were English-language songs.
 
-### Conclusions
+### Discussion and conclusions
 
-```{r}
-print ("here we'll have conclusions")
-```
+While we have managed to gather responses from people of various nationalities, the majority of the respondents were coming from the age group 18-23 (over 80%). Further, their level of English proficiency was also largely limited to "advanced" and "native", with none of the participants claiming a "low" level of proficiency.
+
+As regards the second part of the survey, the participants were characterized by a wide range of musical sophistication. While the lowest score amounted to 39, the highest was 115. 
+
+Nevertheless, regardless of these above mentioned differences, the outcome of our research provided, that there was little, if any correlation between the character of the lyrics of the songs we listen to every day, and the musical sophistication of the listener. The results that were the closest to showing a certain level of positive relation between these two categories related to the sophistication score, and the average sentiment of the lyrics (correlation of 0.162). However, this correlation needs to be approached critically, as the sample group cannot be regarded as representative of a bigger population, with the p-value of 0.24.
+
+The readability metrics have also been compared to the declared English proficiency of the participants. Likewise, it can be said that there appears to be no relation between the readability score and the English proficiency.
+The box plots of the main page could suggest that listeners with moderate proficiency are listening to less readable lyrics, however this result is likely the outcome of a low number of data points in this group (5).
+
+The results of the research indicate, that contrary to a belief that one might have, musical sophistication, as well as English language proficiency do not clearly correlate with the character of the lyrics of the (English) songs we listen to. Nevertheless, more extensive and longer research, especially one that would include songs with non-English lyrics, might provide shifts in these scores, and show that in some cases the correlation is more apparent.
 
 
 Row
 -----------------------------------------------------------------------
 
-### Some source material
+### Article review 
+<b>“Data Science Approach to Compare the Lyrics of Popular Music Artists”  Caleb Rosebaugh, L. Shamir, 2022 </b>
+
+<b>Summary </b>
+
+The article “Data Science Approach to Compare the Lyrics of Popular Music Artists” by Rosebaugh and Samir presents a toolset for quantitative analysis of song lyrics and applies this data science-based approach to explore stylistic differences of chosen artists. The authors highlight that the trends in lyrics evolve over time and are influenced by manifold factors, such as the political environment and genre. Analyzing those trends with the tools provided by the digitization of the contemporary era is important, as music has a large effect on our day-to-day lives. 
+
+To demonstrate the tools, Rosebaugh and Samir use a dataset comprising 18,577 songs from 89 influential artists from the 1960s to 1990s. The lyrics are sourced from AZlyrics.com. The choice of artists was based on sufficient data availability. For the study the UDAT tool was employed, which extracts various lyric descriptors, namely: readability indices, sentiments, use of punctuation characters, word and sound diversity, parts of speech frequency and topic frequency. With those variables, the Weighted Nearest Distance (WND) algorithm is used for artist classification, with a focus on extracting knowledge, rather than achieving a reliable classification. 
+
+The results of the WND model reveal a 12.3% accuracy in associating songs with the correct artists, which surpasses the random guess accuracy of 1.1%, indicating a potential capture of unique patterns associated with individual artists. Analysing the variables that constitute this result, the variation in readability indices is notable. Artists like Bob Dylan exhibit higher readability and e.g. Guns N’ Roses display lower readibility, suggesting noticeable distinctions in lyrical complexity with the use of the chosen indices.  The sentiment analysis set used identifies differences among artists, with Ringo Starr and George Harrison expressing more positive sentiments, contrasting with the negativity found in Hip-Hop artists like Gil Scott-Haron and Rock bands like Motorhead. The correlation between readability and sentiment suggests that more negative songs often utilize longer and more complex language.
+
+Exploration of sound diversity using the Soundex algorithm highlights artists like Imagine Dragons and Bon Jovi using repetitive sounds, while Pink Floyd opts for a more varied set. The related word diversity shows Elton John and Pink Floyd's lower repetition compared to Imagine Dragons, suggesting a simpler, joyful style versus a high diversity of impactful lyrics. The additional analysis of gendered lyrics reveals variations in the frequency of terms related to men and women, with ZZ Top and The Beatles mentioning women-related terms more frequently. 
+
+Overall, the metrics used in the paper seem to successfully describe part of the styles of the popular music lyrics. Their significance is that they are quantitative, making them intuitive and easily explainable, compared to some other “black box” descriptors often used in the field. The analysis included shows how the described metrics could be used in further, more specified research. The Udat software developed for this study was also made freely available and enables easier exploration of quantitative aspects in music lyrics, offering a valuable tool for diverse research questions in the field.
+
+<b> Evaluation </b>
+
+The article of Rosebaugh and Shamir serves as an excellent starting point for future research using the analysis of lyrics. It exemplifies how the Universal Data Analysis of Text tool (UDAT) (Shamir, 2020) could be applied to the music use case. The quantitative data the methodology provides also gives it a broader application, as the findings allow trying to emulate an artist’s style in a more informed way, which is harder with the ‘back box’ approach. However, the tool has a major limitation of supporting only English text, mainly American English. As the authors explore how UDAT can be used in future research, this is a significant piece of information, which should be included in the article. For my application, such support would be necessary, which means that modification of the open-sourced code will be required. 
+
+The choice of artists included in the study is also described very vaguely, undermining the scientific value of the observations, which serve more as demonstrations and curiosities, rather than actionable insights. The authors don’t test any hypothesis, but perform data exploration. This is important to remember when looking at the results and is not highlighted in the text, making it not immediately obvious. Perhaps this is also the reason why the authors don’t visualize the interactions between different calculated descriptors in any way, although some statistics on them are provided (like the correlation between readability and sentiment). Such charts would definitely enhance the importance of the insights of the analysis. 
+
+Lastly, the limitations of the sampling methodology of the Weighted Nearest Distance model predictions should be discussed in the paper. The result of 12.3% looks promising when compared to the random accuracy, however, it is influenced by many factors, which could highly skew it. The multiclass classification implemented has a lot of artists to choose from for each track, hence its accuracy may be highly dependent on the variance of the features in the chosen samples. The authors ensure that the classes are balanced by taking only 100 songs from each artist, however, they don’t explain how the songs were selected, which could highly affect the accuracy, considering that the artist’s style may change over time. 
+
+In conclusion, Rosebaugh and Shamir’s article lays a good foundation for future research in lyric analysis and demonstrates the viability of the metrics proposed by the UDAT tool in the music context. While the lack of a scientific objective in the analysis makes its conclusions scarcely applicable, it still acts as an example use of data science techniques for other endeavours. However, before using these methodologies, all researchers should consider their limitations, which are scarcely described in the article.
+
+
+<b>References </b>
+
+Rosebaugh, Caleb, and Lior Shamir. “Data Science Approach to Compare the Lyrics of Popular Music Artists.” Unisia, 3 July 2022, pp. 1–26, https://doi.org/10.20885/unisia.vol40.iss1.art1. Accessed 14 Dec. 2022.
+
+Shamir, Lior. “UDAT: Compound Quantitative Analysis of Text Using Machine Learning.” Digital Scholarship in the Humanities, vol. 36, no. 1, 13 Mar. 2020, pp. 187–208, https://doi.org/10.1093/llc/fqaa007. Accessed 11 Nov. 2022.
+
+
+
+### Further reading
+Rosebaugh, Caleb, and Lior Shamir. “Data Science Approach to Compare the Lyrics of Popular Music Artists.” Unisia, 3 July 2022, pp. 1–26, https://doi.org/10.20885/unisia.vol40.iss1.art1. Accessed 14 Dec. 2022.
+
+Shamir, Lior. “UDAT: Compound Quantitative Analysis of Text Using Machine Learning.” Digital Scholarship in the Humanities, vol. 36, no. 1, 13 Mar. 2020, pp. 187–208, https://doi.org/10.1093/llc/fqaa007. Accessed 11 Nov. 2022.
+
+Müllensiefen D, Gingras B, Musil J, Stewart L (2014) "The Musicality of Non-Musicians: An Index for Assessing Musical Sophistication in the General Population." PLoS ONE 9(2): e89642. https://doi.org/10.1371/journal.pone.0089642
+
+Baker, D. J., Ventura, J., Calamia, M., Shanahan, D., & Elliott, E. M. (2020). "Examining musical sophistication: A replication and theoretical commentary on the Goldsmiths Musical Sophistication Index." Musicae Scientiae, 24(4), 411-429. https://doi.org/10.1177/1029864918811879
+
+Slevc, L. R., & Miyake, A. (2006). "Individual Differences in Second-Language Proficiency: Does Musical Ability Matter? Psychological Science", 17(8), 675-681. https://doi.org/10.1111/j.1467-9280.2006.01765.x
+
+Lipovetsky, S. "Readability Indices Structure and Optimal Features." Axioms 2023, 12, 421. https://doi.org/10.3390/ axioms12050421
+
+Baker, David John ; Ventura, Juan ; Calamia, Matthew ; Shanahan, Daniel ; Elliott, Emily M. „Examining musical sophistication: A replication and theoretical commentary on the Goldsmiths Musical Sophistication Index.”Musicae scientiae, 2020, Vol.24 (4), p.411-429.
+
+The Participants {data-orientation=rows}
+=======================================================================
+Row {data-width=800}
+-----------------------------------------------------------------------
+```{r}
+df_results$Language <- fct_infreq(df_results$Language)
+# Calculate the number of overall observations
+num_observations <- nrow(df_results)
+
+# Calculate the number of unique categories for Language
+num_languages <- nlevels(df_results$Language)
+
+# Calculate the number of unique categories for Countries
+unique_countries <- unique(df_results$Country)
+num_countries <- length(unique_countries)
+
+#Average Gold_MSI
+mean_gold <- mean(df_results$SC0, na.rm = TRUE)
+rounded_mean_gold <- round(mean_gold, 1)
+```
+
+### Overall
+```{r}
+valueBox(
+  value = 92,
+  "Total Participants",
+  icon = "fa-clipboard-question"
+)
+```
+
+### Number
+    
+```{r}
+valueBox(
+  value = num_observations,
+  "Usable Answers",
+  icon = "fa-users"
+)
+```
+   
+
+### Countries
 
 ```{r}
+valueBox(
+  value = num_countries,
+  "Countries Represented",
+  icon = "fa-globe"
+)
+```
+
+
+### Languages
+
+```{r}
+valueBox(
+  value = num_languages,
+  "Languages Represented",
+  icon = "fa-language"
+)
+```
+
+
+### Average Gold
+
+```{r}
+valueBox(
+  value = rounded_mean_gold,
+  "Average Gold-MSI score",
+  icon = "fa-calculator"
+)
+```
+
+
+Row {data-width=800}
+-----------------------------------------------------------------------
+### Languages in the study {data-height=800}
+
+```{r}
+library(ggplot2)
+
+df_results$Language <- fct_infreq(df_results$Language)
+lang_prof <- ggplot(df_results, aes(x = Language, fill = English.proficiency)) +
+  geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(y = "Count") +  # Add y-axis label
+  guides(fill = guide_legend(title = "English Proficiency Level"))
+
+lang_prof
 
 ```
 
 
+### Frequency ranking of artists included in the study {data-width=200}
 
-More Graphs
+```{r}
+df_songs_eng$Main_artist <- gsub("\\$", "S", df_songs_eng$Main_artist)
+artist_counts <- table(df_songs_eng$Main_artist)
+
+# Data cleaning: Exclude artist names longer than 100 characters from the frequency table
+artist_counts <- artist_counts[nchar(names(artist_counts)) <= 100]
+
+# Create a new dataframe with artist and count columns
+artist_ranking <- data.frame(
+  Main_artist = names(artist_counts),
+  Count = as.numeric(artist_counts)
+)
+
+# Sort the dataframe by count in descending order
+artist_ranking <- artist_ranking[order(-artist_ranking$Count), ]
+
+# Add a rank column
+artist_ranking$Rank <- seq_along(artist_ranking$Main_artist)
+
+# Set 'Rank' column as the row names
+rownames(artist_ranking) <- artist_ranking$Rank
+
+library(knitr)
+knitr::kable(artist_ranking)
+```
+
+### Frequency ranking of all artists in the playlists {data-width=200}
+
+```{r}
+df_songs$Main_artist <- gsub("\\$", "S", df_songs$Main_artist)
+artist_counts <- table(df_songs$Main_artist)
+
+# Data cleaning: Exclude artist names longer than 100 characters from the frequency table
+artist_counts <- artist_counts[nchar(names(artist_counts)) <= 100]
+
+# Create a new dataframe with artist and count columns
+artist_ranking <- data.frame(
+  Main_artist = names(artist_counts),
+  Count = as.numeric(artist_counts)
+)
+
+# Sort the dataframe by count in descending order
+artist_ranking <- artist_ranking[order(-artist_ranking$Count), ]
+
+# Add a rank column
+artist_ranking$Rank <- seq_along(artist_ranking$Main_artist)
+
+# Set 'Rank' column as the row names
+rownames(artist_ranking) <- artist_ranking$Rank
+
+library(knitr)
+knitr::kable(artist_ranking)
+```
+
+Chosen metric correlations {data-navmenu="Extra Graphs"}
+=======================================================================
+
+
+Column {data-width=800}
+-----------------------------------------------------------------------
+
+### Correlations of chosen metrics  {data-height=800}
+
+```{r}
+library(psych)
+
+# Select relevant columns
+df_sub <- df_results[c("SC0", "sentiment_mean", "linsear_write_formula_mean", "difficult_words_perc_mean", "polysyllab_perc_mean", "monosyllab_perc_mean")]
+
+# Rename columns for better readability
+col_names <- c("SC0" = "Gold MSI",
+               "sentiment_mean" = "Sentiment",
+               "linsear_write_formula_mean" = "Linsear Write Formula",
+               "difficult_words_perc_mean" = "Difficult Words %",
+               "polysyllab_perc_mean" = "Polysyllabic %",
+               "monosyllab_perc_mean" = "Monosyllabic %")
+# Rename columns
+colnames(df_sub) <- col_names
+
+
+# Create ggpairs plot with customizations
+p <- pairs.panels(df_sub,
+             scale = FALSE,      # If TRUE, scales the correlation text font
+             density = TRUE,     # If TRUE, adds density plots and histograms
+             ellipses = FALSE,    # If TRUE, draws ellipses
+             method = "pearson", # Correlation method (also "spearman" or "kendall")
+             pch = 21,           # pch symbol
+             lm = TRUE,         # If TRUE, plots linear fit rather than the LOESS (smoothed) fit
+             cor = TRUE,         # If TRUE, reports correlations
+             jiggle = FALSE,     # If TRUE, data points are jittered
+             factor = 2,         # Jittering factor
+             hist.col = 4,       # Histograms color
+             stars = TRUE,       # If TRUE, adds significance level with stars
+             ci = TRUE)          # If TRUE, adds confidence intervals
+# Print the plot
+ggplotly(p)          
+```
+Word frequencies {data-navmenu="Extra Graphs"}
 =======================================================================
 Column {data-width=800}
 -----------------------------------------------------------------------
 
-### Selecting the variables {data-height=200}
+### Word frequency in the songs included in the project (Top 500, no stopwords)
 
-```{r}
-print ("this will enable you to select what data to display on the graph")
-```
+```{r, warning=FALSE}
+#Freq of words
 
-### Custom chart {data-height=800}
+library(tm)
+library(wordcloud2)
+library(dplyr)
 
-```{r}
-print ("this section will include a customizable graph")
+set.seed(4)
+# Create a Corpus from the 'lyrics' column
+#corpus <- Corpus(VectorSource(df_songs_eng$lyrics))
+
+# Preprocess the text in the corpus (e.g., convert to lowercase, remove punctuation, etc.)
+#corpus <- tm_map(corpus, content_transformer(tolower))
+#corpus <- tm_map(corpus, removePunctuation)
+#corpus <- tm_map(corpus, removeNumbers)
+#corpus <- tm_map(corpus, removeWords, stopwords("english"))
+#corpus <- tm_map(corpus, stripWhitespace)
+
+# Create a Document-Term Matrix (DTM)
+#dtm <- DocumentTermMatrix(corpus)
+
+# Convert the DTM to a matrix
+#matrix <- as.matrix(dtm)
+
+# Calculate word frequencies
+#word_freq <- colSums(matrix)
+
+# Create a data frame with words and their frequencies
+#word_freq_df <- data.frame(word = names(word_freq), freq = word_freq)
+
+#word_freq_df <- word_freq_df %>%
+#filter(word != "—")
+#word_freq_df <- word_freq_df %>%
+#  filter(word != "–")
+#word_freq_df <- word_freq_df %>%
+#  filter(word != "scp")
+#word_freq_df <- word_freq_df %>%
+#  filter(word != "<e2><a0><e2><a0><e2><a0>")
+
+#word_freq_df <- word_freq_df %>%
+#  filter(nchar(word) <= 35)
+
+# Order the data frame by frequency in descending order
+#word_freq_df <- word_freq_df[order(-word_freq_df$freq), ]
+
+#write.csv(head(word_freq_df,3000),"word_frequencies.csv")
+word_freq_df = read.csv("word_frequencies.csv") 
+rownames(word_freq_df) <- word_freq_df$X
+word_freq_df = subset(word_freq_df, select=-c(X))
+# Create a wordcloud2
+w <- wordcloud2(data = head(word_freq_df,1000), size = 1, widgetsize =c("1300","1000"))    
+w
 ```
 
 
@@ -143,9 +584,70 @@ print ("this section will include a customizable graph")
 Column {data-width=200}
 -----------------------------------------------------------------------
 
+### Top 500 words (no stopwords)
 
-### Relevant data table
+```{r, warning=FALSE}
+library(knitr)
+knitr::kable(head(word_freq_df['freq'],500))
+```
 
-```{r}
+Word frequencies (not included) {data-navmenu="Extra Graphs"}
+=======================================================================
+Column {data-width=800}
+-----------------------------------------------------------------------
 
+### Word frequency in the songs not included in the project (Top 500)
+
+```{r, warning=FALSE}
+library(tm)
+library(ggwordcloud) #There is an issue in wordcloud2 which prevents it to load 2 wordclouds at once, so I'm using a worse library here
+library(dplyr)
+set.seed(4)
+
+corpus <- Corpus(VectorSource(df_songs[df_songs$language != 'en', ]$lyrics))
+
+# Preprocess the text in the corpus (convert to lowercase, remove punctuation, etc.)
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, removeNumbers)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+corpus <- tm_map(corpus, stripWhitespace)
+
+# Create a Document-Term Matrix (DTM)
+dtm <- DocumentTermMatrix(corpus)
+
+# Convert the DTM to a matrix
+matrix <- as.matrix(dtm)
+
+# Calculate word frequencies
+word_freq2 <- colSums(matrix)
+
+# Create a data frame with words and their frequencies
+word_freq_df2 <- data.frame(word = names(word_freq2), freq = word_freq2)
+
+word_freq_df2 <- word_freq_df2 %>%
+  filter(nchar(word) <= 35)
+
+# Order the data frame by frequency in descending order
+word_freq_df2 <- word_freq_df2[order(-word_freq_df2$freq), ]
+
+# Set seed for reproducibility
+set.seed(42)
+
+# Create a ggwordcloud with proportional font sizes
+ggplot(head(word_freq_df2,500), aes(label = word, size = freq)) +
+  geom_text_wordcloud() +
+  scale_size_area(max_size = 10) +
+  theme_minimal()
+
+```
+
+Column {data-width=200}
+-----------------------------------------------------------------------
+
+### Top 500 words
+
+```{r, warning=FALSE}
+library(knitr)
+knitr::kable(head(word_freq_df2['freq'],500))
 ```

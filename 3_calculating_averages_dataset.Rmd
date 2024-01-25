@@ -1,0 +1,59 @@
+---
+title: "musicSurveyDataAnalysis"
+author: "Hubert Perlinski"
+date: '2024-01-11'
+output: html_document
+---
+
+Loading the datasets
+```{r}
+df_listeners = read.csv("survey_results_20240118.csv")
+df_songs = read.csv("song_data_20240118.csv")
+```
+
+We analyze only the english songs
+```{r}
+df_songs_eng <- subset(df_songs, language == "en")
+```
+
+Let's check if everything works
+```{r}
+hist(df_songs_eng$difficult_words_perc)
+```
+
+Making the main dataset
+```{r}
+create_summary_dataset <- function(data, id_column, summary_columns) {
+  summary_dataset <- data %>%
+    group_by({{id_column}}) %>%
+    summarise(
+      nr_of_songs = n(),
+      across({{summary_columns}}, list(
+        mean = ~mean(.),
+        median = ~median(.),
+        sd = ~sd(.)
+      ), .names = "{col}_{fn}"
+      )
+    )
+  
+  return(summary_dataset)
+}
+
+summary_columns <- c("danceability", "energy","key","loudness","mode", "speechiness", "acousticness", "instrumentalness","liveness","valence","tempo",
+                     "track.duration_ms","track.popularity","flesch_reading_ease", "flesch_kincaid_grade","gunning_fog","smog_index",  "automated_readability_index", "coleman_liau_index","linsear_write_formula","dale_chall_readability_score","mcalpine_eflaw", "syllable_count", "lexicon_count","difficult_words","polysyllabcount","monosyllabcount","difficult_words_perc","polysyllab_perc", "monosyllab_perc", "syllable_perc","sentiment")#"text_standard",
+summary_dataset <- create_summary_dataset(df_songs_eng, playlist_id, summary_columns)
+
+summary_dataset_final <- left_join(summary_dataset, df_listeners, by = "playlist_id")
+
+```
+
+```{r}
+write.csv(summary_dataset_final, "survey_results_for_analysis_20240118.csv", row.names=FALSE)
+```
+
+
+```{r}
+hist(summary_dataset$coleman_liau_index_mean)
+```
+
+

@@ -1,0 +1,74 @@
+---
+title: "gettingSongData"
+author: "Hubert Perlinski"
+date: '2024-01-10'
+output: html_document
+---
+
+```{r}
+df_survey = read.csv("Sophistication_January 18, 2024_07.06.csv")
+```
+
+```{r}
+df_clean <-subset(df_survey, !grepl('\\D', df_survey$SC0) & df_survey$SC0!=0 & df_survey$Q25 != "JUST FOR TESTING" & df_survey$Q25 != "")
+df_clean$SC0 <- as.numeric(df_clean$SC0)
+```
+
+Checking the distribution of the Gold MSI scores
+```{r}
+library(ggplot2)
+ggplot(df_clean, aes(x = SC0)) +
+  geom_histogram(binwidth = 2, fill = "skyblue", color = "white", alpha = 0.7) +
+  labs(title = "Histogram of SC0",
+       x = "SC0 Values",
+       y = "Frequency") +
+  theme_minimal()
+```
+Extracting the playlist IDs
+```{r}
+library(stringr)
+df_clean$playlist_id <- str_extract(df_clean$Q25, "(?<=/)[^/]+(?=\\?)")
+```
+
+Spotify API keys 
+```{r}
+Sys.setenv(SPOTIFY_CLIENT_ID = 'x')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'x')
+```
+
+
+
+Getting the songs
+```{r}
+library(tidyverse)
+library(spotifyr)
+
+songsFromSurvey <-
+  get_playlist_audio_features(
+    "", 
+    df_clean$playlist_id
+  )
+```
+
+```{r}
+songsFromSurvey <- subset(songsFromSurvey, select = -c(track.available_markets,track.album.available_markets, track.album.images))
+songsFromSurvey$track.artists <- sapply(songsFromSurvey$track.artists, function(x) toString(x))
+songsFromSurvey$track.album.artists <- sapply(songsFromSurvey$track.album.artists, function(x) toString(x))
+```
+
+Saving the song names
+```{r}
+write.csv(songsFromSurvey, "sophisticationsSongs20240118.csv", row.names=FALSE)
+```
+
+```{r}
+write.csv(df_clean, "survey_results_20240118.csv", row.names=FALSE)
+```
+
+
+
+
+
+
+
+
