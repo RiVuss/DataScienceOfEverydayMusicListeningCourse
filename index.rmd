@@ -242,135 +242,6 @@ p
 
 ```
 
-Background
-=======================================================================
-
-
-Column
------------------------------------------------------------------------
-
-### Introduction
-
-Songs that we listen to every day do not only stimulate our mood, and help as get through our daily chores. They tell us stories, to which we can relate, describe events that we dream of, or simply circulate around words that define our life routines. The lyrics play an integral part in our daily musical sphere. 
-While there is no doubt that the character of the lyrics differs between artists, as well as genres, a question emerges, whether their sophistication has a certain correlation on the "other" side. Namely, if the listeners' own musical sophistication, and other characteristics (such as background, English proficiency) are connected to the character of the lyrics of the songs they listen to most often.
-The studies on the musical and language sophistication have not yet been developed extensively, with most of the research focusing on more general relations within the area of music culture - e.g. the one between the music listening and cultural adaptation in host states (provide citation). Thus, our research had as its objective the provision of a valuable point for discussion.
-
-### Methodology
-
-The research was based on a survey, to which we collected 55 complete responses. While the number of the total participants was almost twice as high, lack of response to one of the questions already precluded them from being taken into account.
-To gather the data that would allow us to measure numerous variables connected to the musical sophistication and language, we have asked the participants of our survey some general questions concerning their personal information -  their age group, native language, English proficiency, as well as home country. Further, they were asked about their musical sophistication, with the use of inquiries selected from Gold MSI. Additionally, we asked each participant to share a link to their Spotify On Repeat playlist. In order to study the data, we have used Spotify and Genius APIs, and a number of indices for the measurement of the readability of the lyrics - Flesch Reading Ease, Flesch Kincaid Grade Level, Gunning Fog Index, Smog Index, Automated Readability Index, Coleman Liau Index, Linsear Write, Dale Chall Readability formula, and McAlpine EFLAW Readability Score. Due to the limitations of these indices, the only songs we could measure were English-language songs.
-
-### Discussion and conclusions
-
-While we have managed to gather responses from people of various nationalities, the majority of the respondents were coming from the age group 18-23 (over 80%). Further, their level of English proficiency was also largely limited to "advanced" and "native", with none of the participants claiming a "low" level of proficiency.
-
-As regards the second part of the survey, the participants were characterized by a wide range of musical sophistication. While the lowest score amounted to 39, the highest was 115. 
-
-Nevertheless, regardless of these above mentioned differences, the outcome of our research provided, that there was little, if any correlation between the character of the lyrics of the songs we listen to every day, and the musical sophistication of the listener. The results that were the closest to showing a certain level of positive relation between these two categories related to the sophistication score, and the average sentiment of the lyrics (correlation of 0.162). However, this correlation needs to be approached critically, as the sample group cannot be regarded as representative of a bigger population, with the p-value of 0.24.
-
-The readability metrics have also been compared to the declared English proficiency of the participants. Likewise, it can be said that there appears to be no relation between the readability score and the English proficiency.
-The box plots of the main page could suggest that listeners with moderate proficiency are listening to less readable lyrics, however this result is likely the outcome of a low number of data points in this group (5).
-
-The results of the research indicate, that contrary to a belief that one might have, musical sophistication, as well as English language proficiency do not clearly correlate with the character of the lyrics of the (English) songs we listen to. Nevertheless, more extensive and longer research, especially one that would include songs with non-English lyrics, might provide shifts in these scores, and show that in some cases the correlation is more apparent.
-
-
-Column
------------------------------------------------------------------------
-
-### Article reviews {.tabset data-height=700}
-
-#### <b>“Data Science Approach to Compare the Lyrics of Popular Music Artists”  Caleb Rosebaugh, L. Shamir, 2022 </b>
-
-Hubert Perliński
-
-<b>Summary </b>
-
-The article “Data Science Approach to Compare the Lyrics of Popular Music Artists” by Rosebaugh and Samir presents a toolset for quantitative analysis of song lyrics and applies this data science-based approach to explore stylistic differences of chosen artists. The authors highlight that the trends in lyrics evolve over time and are influenced by manifold factors, such as the political environment and genre. Analyzing those trends with the tools provided by the digitization of the contemporary era is important, as music has a large effect on our day-to-day lives. 
-
-To demonstrate the tools, Rosebaugh and Samir use a dataset comprising 18,577 songs from 89 influential artists from the 1960s to 1990s. The lyrics are sourced from AZlyrics.com. The choice of artists was based on sufficient data availability. For the study the UDAT tool was employed, which extracts various lyric descriptors, namely: readability indices, sentiments, use of punctuation characters, word and sound diversity, parts of speech frequency and topic frequency. With those variables, the Weighted Nearest Distance (WND) algorithm is used for artist classification, with a focus on extracting knowledge, rather than achieving a reliable classification. 
-
-The results of the WND model reveal a 12.3% accuracy in associating songs with the correct artists, which surpasses the random guess accuracy of 1.1%, indicating a potential capture of unique patterns associated with individual artists. Analysing the variables that constitute this result, the variation in readability indices is notable. Artists like Bob Dylan exhibit higher readability and e.g. Guns N’ Roses display lower readibility, suggesting noticeable distinctions in lyrical complexity with the use of the chosen indices.  The sentiment analysis set used identifies differences among artists, with Ringo Starr and George Harrison expressing more positive sentiments, contrasting with the negativity found in Hip-Hop artists like Gil Scott-Haron and Rock bands like Motorhead. The correlation between readability and sentiment suggests that more negative songs often utilize longer and more complex language.
-
-Exploration of sound diversity using the Soundex algorithm highlights artists like Imagine Dragons and Bon Jovi using repetitive sounds, while Pink Floyd opts for a more varied set. The related word diversity shows Elton John and Pink Floyd's lower repetition compared to Imagine Dragons, suggesting a simpler, joyful style versus a high diversity of impactful lyrics. The additional analysis of gendered lyrics reveals variations in the frequency of terms related to men and women, with ZZ Top and The Beatles mentioning women-related terms more frequently. 
-
-Overall, the metrics used in the paper seem to successfully describe part of the styles of the popular music lyrics. Their significance is that they are quantitative, making them intuitive and easily explainable, compared to some other “black box” descriptors often used in the field. The analysis included shows how the described metrics could be used in further, more specified research. The Udat software developed for this study was also made freely available and enables easier exploration of quantitative aspects in music lyrics, offering a valuable tool for diverse research questions in the field.
-
-<b> Evaluation </b>
-
-The article of Rosebaugh and Shamir serves as an excellent starting point for future research using the analysis of lyrics. It exemplifies how the Universal Data Analysis of Text tool (UDAT) (Shamir, 2020) could be applied to the music use case. The quantitative data the methodology provides also gives it a broader application, as the findings allow trying to emulate an artist’s style in a more informed way, which is harder with the ‘back box’ approach. However, the tool has a major limitation of supporting only English text, mainly American English. As the authors explore how UDAT can be used in future research, this is a significant piece of information, which should be included in the article. For my application, such support would be necessary, which means that modification of the open-sourced code will be required. 
-
-The choice of artists included in the study is also described very vaguely, undermining the scientific value of the observations, which serve more as demonstrations and curiosities, rather than actionable insights. The authors don’t test any hypothesis, but perform data exploration. This is important to remember when looking at the results and is not highlighted in the text, making it not immediately obvious. Perhaps this is also the reason why the authors don’t visualize the interactions between different calculated descriptors in any way, although some statistics on them are provided (like the correlation between readability and sentiment). Such charts would definitely enhance the importance of the insights of the analysis. 
-
-Lastly, the limitations of the sampling methodology of the Weighted Nearest Distance model predictions should be discussed in the paper. The result of 12.3% looks promising when compared to the random accuracy, however, it is influenced by many factors, which could highly skew it. The multiclass classification implemented has a lot of artists to choose from for each track, hence its accuracy may be highly dependent on the variance of the features in the chosen samples. The authors ensure that the classes are balanced by taking only 100 songs from each artist, however, they don’t explain how the songs were selected, which could highly affect the accuracy, considering that the artist’s style may change over time. 
-
-In conclusion, Rosebaugh and Shamir’s article lays a good foundation for future research in lyric analysis and demonstrates the viability of the metrics proposed by the UDAT tool in the music context. While the lack of a scientific objective in the analysis makes its conclusions scarcely applicable, it still acts as an example use of data science techniques for other endeavours. However, before using these methodologies, all researchers should consider their limitations, which are scarcely described in the article.
-
-
-<b>References </b>
-
-Rosebaugh, Caleb, and Lior Shamir. “Data Science Approach to Compare the Lyrics of Popular Music Artists.” Unisia, 3 July 2022, pp. 1–26, https://doi.org/10.20885/unisia.vol40.iss1.art1. Accessed 14 Dec. 2022.
-
-Shamir, Lior. “UDAT: Compound Quantitative Analysis of Text Using Machine Learning.” Digital Scholarship in the Humanities, vol. 36, no. 1, 13 Mar. 2020, pp. 187–208, https://doi.org/10.1093/llc/fqaa007. Accessed 11 Nov. 2022.
-
-#### <b>Music listening and cultural adaptation: How different languages of songs affect Chinese international students’ uses of music and cultural adaptation in the United States </b>
-
-Ignacy Walus
-
-The relation between music and language is without a doubt a complex one. On the one hand, language has a great influence on music, affecting its style, and having profound impact on its listeners. On the other hand, music may be considered to influence acquiring language skills. Furthermore, this may lead to the role of music – and its language – in adopting cultural customs as well. Such relation, between the fields of music listening and cultural adaptation, is studied by Jia and Koku in their article on the role of music in the integration of Chinese students in the United States. In this paper, I will review their work, by summarizing and evaluating their research.
-
-The article at issue is based on four research questions, that together aim to examine what role English and Chinese music plays in the process of acculturation of Chinese international students in the United States. Firstly, the authors try to find if various genres of music influence different uses of music – for mood regulation, and identity building, among others. Secondly, they examine how the language of music – Chinese or English – affects these various uses. Thirdly, they study the implications of the language of music Chinese students listen to every day on their cultural adaptation. Lastly, they discuss whether this effect differs by uses of music. 
-	
-The findings of the article Jia and Koku are based on self-reported research the authors conducted among the Chinese international students in the United States. The final sample group consisted of 256 students from three universities.  The survey contained questions concerning not only the language or type of music Chinese students listened to every day, and its primary use, but also questions relating to demographic facts (on gender, length of stay in the US), and asking how frequently specific music was listened to by them.  
-	
-The results presented by the authors of the article reveal numerous interesting facts concerning the relation between everyday music and cultural adaptation. The research shows, that while the type of music genre has no significant effect on different use of music, listening to music in either Chinese or English predicts its certain usage.  While English music primarily serves for entertainment and identity building, Chinese music is used for negative mood management. This leads to the authors’ argument, that for bilingual listeners, songs in their native language serve for this very purpose of mood management – on the other hand, the non-native language songs have entertaining goal.  Further, the authors observe, that since English songs positively affect Chinese students’ acculturation, they emerge as a means to help them “forge new identities”.  Jia and Koku find that frequent listening to English songs for the goal of identity building is pivotal in developing Chinese students’ integration in the American society – but needs to be further strengthened by their own identification with the music itself.  Importantly, the authors also stress the limitations to their study that concern the small number of participants in the survey, and the question of applicability of its results to the other groups of international students. They point out that further questions on this research remain to be examined.
-	
-“Music listening and cultural adaptation…” emerges as an important article in the field of studying music listening and its impact on individuals. The research conducted by Jia and Koku contributes to it by displaying not only how listening to music can be used for cultural adaptation in a new country, but also by showing how important the role of the language of this music itself is. Furthermore, the article studies a topic that is relatable to most of the international students that move abroad to a country that is to some degree culturally different that their home state. It shows that integration is conducted not only externally – via contacts with friends, local culture – but also internally, through our own personal activities, such as everyday music listening. The article has an additional value, if we consider the fact, that we live in a world where mobility takes precedence, and thus, the “necessity” of cultural adaptation is common. And as it is shown, music listening might play a more and more significant role in this process. The article needs to be further praised for its relevant and interesting findings – e.g. pointing out that Chinese songs primarily serve for negative mood management of students. While some of the other results might be considered as not surprising, they are nevertheless crucial to examine the process of students’ acculturation.
-	
-However, the article also has significant drawbacks. The first, and the most obvious one, is the small size of the sample group. While the authors are conscious of this limitation, as they point out at the end that the results shall not be generalized for the whole population of Chinese students in America, numerous findings and arguments stated throughout the text appear as very general and applicable to not only Chinese, but many other international students concerned with cultural adaptation. More emphasis should have been put on this limitation, to provide clear “barriers” to the applicability of the findings. Further, the design of the research can be considered as limited, which may be to the detriment of the accuracy of the results. Namely, the findings to the first research question concerning relations between genres and uses of music are based on a small number of categories of genres – these are collapsed to five with the highest number of responses (Chinese pop, Chinese others, American pop, American others, and music from other countries).  While this gives more clarity, fragmenting these categories may provide for different results – and genres may indeed be found to influence various uses of music. Lastly, it needs to be pointed out, that the study largely concerns English music, which dominates the music industry worldwide. Therefore, the findings that listening to non-native music predicts use of music for identity building  should be approached carefully. English music may indeed influence the integration in English-speaking countries. However, it is rather doubtful that it serves the same purposes in non-English speaking states, where, due to its omnipresence, it would be still one of the most (if not the most) popular genres.
-	
-The article by Jia and Koku is without a doubt an important starting point in a debate over relation between music and language, and music’s role in cultural assimilation. As outlined, it contains drawbacks, that should be dealt with in the future academic works. And as the topic is far from being exhausted, further studies on it shall only be a matter of time. 
-
-Bibliography
-1.	Jia, Fei, Emmanuel Koku. “Music listening and cultural adaptation: How different languages of songs affect Chinese international students’ uses of music and cultural adaptation in the United States”. Journal of International and Intercultural Communication 13. No. 4 (2020). 291-308.
-
-#### <b>Article Review: Co-Variation of Tonality in the Music and Speech of Different Cultures </b>
-
-Tomer Shor
-
-Music is often considered to be the universal language, despite the fact that the traditional music and underlying musical theory of various cultures differs greatly. The differences between traditional Western and Eastern music, especially in regard to pitch and tonal usage, have long been recognized, both in scholarly literature and music theory. Similarly, pitch usage also varies greatly between languages, which, accordingly, might be grouped as "tonal" or "non-tonal" languages. Whereas in tonal languages the pitch contours affect and convey the meaning of the spoken word, non-tonal languages share no such features, and variations of pitch or relative level do not typically alter the meanings of words. 
-
-With these differences in mind, Han et al. sought to answer the following question – is there a connection between the two phenomena? Is there a correlation between the tonal characteristics of the music and the speech patterns of specific cultures? In order to investigate their hypothesis – that said correlation does indeed exist – the authors examined 50 traditional melodies of tone language cultures – Mandarin, Thai, and Vietnamese – and 50 comparable melodies from non-tone language cultures – American, French and German. Additionally, the authors commissioned the recording of monologues read by native speakers of all six languages, instructing them to speak as if they were engaged in normal conversation. The melodies and speech recordings were then analyzed in terms of the frequency of slope reversals (changes in pitch direction), and the size of the melodic intervals used. The results of said analyses were subsequently used to compare the frequency of slope reversals: the music of tonal languages to the music of non-tonal languages, and the speech of tonal languages to that of non-tonal ones. A similar, four-way comparison was conducted with the results of the melodic interval analysis.
-
-The results of the research seem to support the authors' initial hypothesis. Both the speech and the music of tonal languages displayed higher frequencies of slope reversals compared to those of non-tonal languages; similarly – while the distribution of interval size between tonal and non-tonal languages was not as skewed as the distribution of slope reversals – there was a substantial difference in distribution between the two languages groups, with speech and music displaying parallel tendencies. These results lead the authors to conclude that there exists an intimate relationship between language and music, manifested in tonal distinction between the music of tonal and non-tonal languages, that parallels the distinctions between the languages.
-
-However, in their discussion of the results, the authors reach conclusions that seem unsupported by the data – namely, that the variations in aesthetic preferences between cultures is explained in terms of biology. While this is a plausible explanation, nowhere in the article are those biological differences explicated. Nor is it the only possible explanation: while biological differences – either innate or brought about by historical and material conditions – certainly might explain the variations in tonal usage, it is also possible that a musical Sappir-Whorf theory of sorts is at play here. Sappir-Whorf theory, or the linguistic relativity hypothesis, claims that the language an individual speaks fundamentally affects and alters their perception of the world. A similar claim might be made about music and language – that the language of a culture inherently affects the type of music produced by that culture and its properties – and/or vice versa. In fact, this claim is supported by the authors' data, and the characteristics of the relation between language and music within each culture is discussed in the article, e.g., in relation to scale. Traditional Eastern music tends to employ pentatonic (five-tone) scales, while traditional Western music tends to use heptatonic (seven-tone) scales, leading Han et al. to posit that the difference in scale use, rather than being simply an aesthetic one, reflects the desire to mirror the melodic intervals used in speech. This explanation, however, is at odds with the authors' conclusion regarding biological differences – if the cause of tonal differences in language is a biological one, why would the tonal differences in music not stem from the same source? In other words – is it the language that shapes the music, the music that shapes the language, or rather a third variable (biological or otherwise) that shapes both?
-
-This criticism is further grounded in the methods of the study: in order to mitigate possible cross-cultural contamination regarding music, the authors specifically chose melodies that pre-date 1900, preferably by hundreds of years. Yet, for the speech analysis part, the authors commissioned recordings by current-day language speakers. Thus, the two sets of comparison materials are not equivalent, with the musical dataset being comprised of tunes that are hundreds of years old – tunes that native speakers are probably familiar with, and, after decades of being in the zeitgeist of each respective culture, could have had an influence on certain cultural and language tendencies. Similarly, the languages themselves might have undergone certain changes during that period – speech patterns change over them, invariably affecting the tendencies of slope reversals and the interval size of spoken language. For the comparison to be fair and accurate, it ought to either feature contemporary tunes, or historical recordings from the periods of the tunes selected – although that, obviously, creates its own set of complications.
-
-Despite these points of contention, Han et al. provide a valuable addition to the study of music and language. Speech and music are both essential modes of expression, shared by all people across all cultures. It is precisely because of this that it is so important to investigate the differences between and within these modes of expression, and to try and highlight the similarities. While many musical cultures and their subsequent use of scales appears to converge around the harmonic scale , indicating a biological underpinning to our musical preferences – differences between musical cultures are still abundant, suggesting further mechanisms that influence aesthetic outcomes. Han et al.'s contribution is a first step in trying to unearth these mechanisms, focused on language. While further research is warranted  – both in comparisons between tonal and non-tonal languages, and of tonal languages to other tonal languages and non-tonal languages to other non-tonal languages – this article makes clear that the interplay between music and language exists, is empirically observable – and has a lot to teach us about ourselves and our cultures.
-
-Bibliography
-Han S, Sundararajan J, Bowling DL, Lake J, Purves D (2011) Co-Variation of Tonality in the Music and Speech of Different Cultures. PLoS ONE 6(5): e20160. https://doi.org/10.1371/journal.pone.0020160
-Gill KZ, Purves D (2009) A Biological Rationale for Musical Scales. PLoS ONE 4(12): e8144. doi:10.1371/journal.pone.0008144
-Bowling DL, Sundararajan J, Han S, Purves D (2012) Expression of Emotion in Eastern and Western Music Mirrors Vocalization. PLoS ONE 7(3): e31942. https://doi.org/10.1371/journal.pone.0031942
-
-
-
-### Further reading {data-height=300}
-Rosebaugh, Caleb, and Lior Shamir. “Data Science Approach to Compare the Lyrics of Popular Music Artists.” Unisia, 3 July 2022, pp. 1–26, https://doi.org/10.20885/unisia.vol40.iss1.art1. Accessed 14 Dec. 2022.
-
-Shamir, Lior. “UDAT: Compound Quantitative Analysis of Text Using Machine Learning.” Digital Scholarship in the Humanities, vol. 36, no. 1, 13 Mar. 2020, pp. 187–208, https://doi.org/10.1093/llc/fqaa007. Accessed 11 Nov. 2022.
-
-Müllensiefen D, Gingras B, Musil J, Stewart L (2014) "The Musicality of Non-Musicians: An Index for Assessing Musical Sophistication in the General Population." PLoS ONE 9(2): e89642. https://doi.org/10.1371/journal.pone.0089642
-
-Baker, D. J., Ventura, J., Calamia, M., Shanahan, D., & Elliott, E. M. (2020). "Examining musical sophistication: A replication and theoretical commentary on the Goldsmiths Musical Sophistication Index." Musicae Scientiae, 24(4), 411-429. https://doi.org/10.1177/1029864918811879
-
-Slevc, L. R., & Miyake, A. (2006). "Individual Differences in Second-Language Proficiency: Does Musical Ability Matter? Psychological Science", 17(8), 675-681. https://doi.org/10.1111/j.1467-9280.2006.01765.x
-
-Lipovetsky, S. "Readability Indices Structure and Optimal Features." Axioms 2023, 12, 421. https://doi.org/10.3390/ axioms12050421
-
-Baker, David John ; Ventura, Juan ; Calamia, Matthew ; Shanahan, Daniel ; Elliott, Emily M. „Examining musical sophistication: A replication and theoretical commentary on the Goldsmiths Musical Sophistication Index.”Musicae scientiae, 2020, Vol.24 (4), p.411-429.
-
 The Participants {data-orientation=rows}
 =======================================================================
 Row {data-width=800}
@@ -520,7 +391,660 @@ library(knitr)
 knitr::kable(artist_ranking)
 ```
 
-Chosen metric correlations {data-navmenu="Extra Graphs"}
+The research {data-navmenu="Background"}
+=======================================================================
+
+
+Column 
+-----------------------------------------------------------------------
+
+### Introduction
+
+Songs that we listen to every day do not only stimulate our mood, and help as get through our daily chores. They tell us stories, to which we can relate, describe events that we dream of, or simply circulate around words that define our life routines. The lyrics play an integral part in our daily musical sphere. 
+While there is no doubt that the character of the lyrics differs between artists, as well as genres, a question emerges, whether their sophistication has a certain correlation on the "other" side. Namely, if the listeners' own musical sophistication, and other characteristics (such as background, English proficiency) are connected to the character of the lyrics of the songs they listen to most often.
+The studies on the musical and language sophistication have not yet been developed extensively, with most of the research focusing on more general relations within the area of music culture - e.g. the one between the music listening and cultural adaptation in host states (provide citation). Thus, our research had as its objective the provision of a valuable point for discussion.
+
+### Methodology
+
+The research was based on a survey, to which we collected 55 complete responses. While the number of the total participants was almost twice as high, lack of response to one of the questions already precluded them from being taken into account.
+To gather the data that would allow us to measure numerous variables connected to the musical sophistication and language, we have asked the participants of our survey some general questions concerning their personal information -  their age group, native language, English proficiency, as well as home country. Further, they were asked about their musical sophistication, with the use of inquiries selected from Gold MSI. Additionally, we asked each participant to share a link to their Spotify On Repeat playlist. In order to study the data, we have used Spotify and Genius APIs, and a number of indices for the measurement of the readability of the lyrics - Flesch Reading Ease, Flesch Kincaid Grade Level, Gunning Fog Index, Smog Index, Automated Readability Index, Coleman Liau Index, Linsear Write, Dale Chall Readability formula, and McAlpine EFLAW Readability Score. Due to the limitations of these indices, the only songs we could measure were English-language songs.
+
+### Limitations
+
+1.	Number of participants
+
+As mentioned earlier, we have managed to collect 55 complete responses. This sample group cannot be assessed as sufficient to claim, that scores presented are representative of the population at large. Therefore, for the further studies, not constrained by a short time limit, we would advise to collect responses from a big representative group.
+
+2.	Language 
+
+This limitation is explicitly connected to the previous one. We have managed to gather only a few responses from certain language groups. Further, some language/language proficiency groups have not been represented in the research at all. This undermines the final assessment of the score (with regard to these groups). A more international approach is necessary – this should be obtainable if the research is conducted by an international group (which was the case here), but within a longer time frame. As regards a one of the language proficiency groups – “low English proficiency” – survey might be translated, in order to make it possible for this group to be represented in the research.
+
+3.	English lyrics
+
+Due to limitations of various indices that we have used to assess the readability of the song lyrics, we were able to only include English songs from participants’ playlists. Thus, we had to filter out many of the songs that they often listened to. Creating an index that assesses readability of the word regardless of the language may provide for future research in this area, that would not be limited to English songs. It may also lead to interesting outcomes, for example – listeners with lower English proficiency, but high musical sophistication, may be found to listen to less “readable” songs (but in non-English language).
+
+4.	Capturing language sophistication
+
+Lastly, it should also be noted that readability that metrics of readability may not be a good representation of the language sophistication. They capture the difficulty of the words and omit their meaning. Many indices are also optimized to work with sentences, which many songs don’t have. This made them not usable in the study.
+
+Column 
+-----------------------------------------------------------------------
+
+
+### Discussion and conclusions
+
+While we have managed to gather responses from people of various nationalities, the majority of the respondents were coming from the age group 18-23 (over 80%). Further, their level of English proficiency was also largely limited to "advanced" and "native", with none of the participants claiming a "low" level of proficiency.
+
+As regards the second part of the survey, the participants were characterized by a wide range of musical sophistication. While the lowest score amounted to 39, the highest was 115. 
+
+Nevertheless, regardless of these above mentioned differences, the outcome of our research provided, that there was little, if any correlation between the character of the lyrics of the songs we listen to every day, and the musical sophistication of the listener. The results that were the closest to showing a certain level of positive relation between these two categories related to the sophistication score, and the average sentiment of the lyrics (correlation of 0.162). However, this correlation needs to be approached critically, as the sample group cannot be regarded as representative of a bigger population, with the p-value of 0.24.
+
+The readability metrics have also been compared to the declared English proficiency of the participants. Likewise, it can be said that there appears to be no relation between the readability score and the English proficiency.
+The box plots of the main page could suggest that listeners with moderate proficiency are listening to less readable lyrics, however this result is likely the outcome of a low number of data points in this group (5).
+
+The results of the research indicate, that contrary to a belief that one might have, musical sophistication, as well as English language proficiency do not clearly correlate with the character of the lyrics of the (English) songs we listen to. Nevertheless, more extensive and longer research, especially one that would include songs with non-English lyrics, might provide shifts in these scores, and show that in some cases the correlation is more apparent.
+
+
+
+
+
+
+### Further reading {data-height=300}
+Rosebaugh, Caleb, and Lior Shamir. “Data Science Approach to Compare the Lyrics of Popular Music Artists.” Unisia, 3 July 2022, pp. 1–26, https://doi.org/10.20885/unisia.vol40.iss1.art1. Accessed 14 Dec. 2022.
+
+Shamir, Lior. “UDAT: Compound Quantitative Analysis of Text Using Machine Learning.” Digital Scholarship in the Humanities, vol. 36, no. 1, 13 Mar. 2020, pp. 187–208, https://doi.org/10.1093/llc/fqaa007. Accessed 11 Nov. 2022.
+
+Müllensiefen D, Gingras B, Musil J, Stewart L (2014) "The Musicality of Non-Musicians: An Index for Assessing Musical Sophistication in the General Population." PLoS ONE 9(2): e89642. https://doi.org/10.1371/journal.pone.0089642
+
+Baker, D. J., Ventura, J., Calamia, M., Shanahan, D., & Elliott, E. M. (2020). "Examining musical sophistication: A replication and theoretical commentary on the Goldsmiths Musical Sophistication Index." Musicae Scientiae, 24(4), 411-429. https://doi.org/10.1177/1029864918811879
+
+Slevc, L. R., & Miyake, A. (2006). "Individual Differences in Second-Language Proficiency: Does Musical Ability Matter? Psychological Science", 17(8), 675-681. https://doi.org/10.1111/j.1467-9280.2006.01765.x
+
+Lipovetsky, S. "Readability Indices Structure and Optimal Features." Axioms 2023, 12, 421. https://doi.org/10.3390/ axioms12050421
+
+Baker, David John ; Ventura, Juan ; Calamia, Matthew ; Shanahan, Daniel ; Elliott, Emily M. „Examining musical sophistication: A replication and theoretical commentary on the Goldsmiths Musical Sophistication Index.”Musicae scientiae, 2020, Vol.24 (4), p.411-429.
+
+Article reviews {data-navmenu="Background"}
+=======================================================================
+
+Column {.tabset}
+-----------------------------------------------------------------------
+
+### Comparing lyrics {.tabeset}
+
+#### <b>“Data Science Approach to Compare the Lyrics of Popular Music Artists”  Caleb Rosebaugh, L. Shamir, 2022 </b>
+
+Hubert Perliński
+
+<b>Summary </b>
+
+The article “Data Science Approach to Compare the Lyrics of Popular Music Artists” by Rosebaugh and Samir presents a toolset for quantitative analysis of song lyrics and applies this data science-based approach to explore stylistic differences of chosen artists. The authors highlight that the trends in lyrics evolve over time and are influenced by manifold factors, such as the political environment and genre. Analyzing those trends with the tools provided by the digitization of the contemporary era is important, as music has a large effect on our day-to-day lives. 
+
+To demonstrate the tools, Rosebaugh and Samir use a dataset comprising 18,577 songs from 89 influential artists from the 1960s to 1990s. The lyrics are sourced from AZlyrics.com. The choice of artists was based on sufficient data availability. For the study the UDAT tool was employed, which extracts various lyric descriptors, namely: readability indices, sentiments, use of punctuation characters, word and sound diversity, parts of speech frequency and topic frequency. With those variables, the Weighted Nearest Distance (WND) algorithm is used for artist classification, with a focus on extracting knowledge, rather than achieving a reliable classification. 
+
+The results of the WND model reveal a 12.3% accuracy in associating songs with the correct artists, which surpasses the random guess accuracy of 1.1%, indicating a potential capture of unique patterns associated with individual artists. Analysing the variables that constitute this result, the variation in readability indices is notable. Artists like Bob Dylan exhibit higher readability and e.g. Guns N’ Roses display lower readibility, suggesting noticeable distinctions in lyrical complexity with the use of the chosen indices.  The sentiment analysis set used identifies differences among artists, with Ringo Starr and George Harrison expressing more positive sentiments, contrasting with the negativity found in Hip-Hop artists like Gil Scott-Haron and Rock bands like Motorhead. The correlation between readability and sentiment suggests that more negative songs often utilize longer and more complex language.
+
+Exploration of sound diversity using the Soundex algorithm highlights artists like Imagine Dragons and Bon Jovi using repetitive sounds, while Pink Floyd opts for a more varied set. The related word diversity shows Elton John and Pink Floyd's lower repetition compared to Imagine Dragons, suggesting a simpler, joyful style versus a high diversity of impactful lyrics. The additional analysis of gendered lyrics reveals variations in the frequency of terms related to men and women, with ZZ Top and The Beatles mentioning women-related terms more frequently. 
+
+Overall, the metrics used in the paper seem to successfully describe part of the styles of the popular music lyrics. Their significance is that they are quantitative, making them intuitive and easily explainable, compared to some other “black box” descriptors often used in the field. The analysis included shows how the described metrics could be used in further, more specified research. The Udat software developed for this study was also made freely available and enables easier exploration of quantitative aspects in music lyrics, offering a valuable tool for diverse research questions in the field.
+
+<b> Evaluation </b>
+
+The article of Rosebaugh and Shamir serves as an excellent starting point for future research using the analysis of lyrics. It exemplifies how the Universal Data Analysis of Text tool (UDAT) (Shamir, 2020) could be applied to the music use case. The quantitative data the methodology provides also gives it a broader application, as the findings allow trying to emulate an artist’s style in a more informed way, which is harder with the ‘back box’ approach. However, the tool has a major limitation of supporting only English text, mainly American English. As the authors explore how UDAT can be used in future research, this is a significant piece of information, which should be included in the article. For my application, such support would be necessary, which means that modification of the open-sourced code will be required. 
+
+The choice of artists included in the study is also described very vaguely, undermining the scientific value of the observations, which serve more as demonstrations and curiosities, rather than actionable insights. The authors don’t test any hypothesis, but perform data exploration. This is important to remember when looking at the results and is not highlighted in the text, making it not immediately obvious. Perhaps this is also the reason why the authors don’t visualize the interactions between different calculated descriptors in any way, although some statistics on them are provided (like the correlation between readability and sentiment). Such charts would definitely enhance the importance of the insights of the analysis. 
+
+Lastly, the limitations of the sampling methodology of the Weighted Nearest Distance model predictions should be discussed in the paper. The result of 12.3% looks promising when compared to the random accuracy, however, it is influenced by many factors, which could highly skew it. The multiclass classification implemented has a lot of artists to choose from for each track, hence its accuracy may be highly dependent on the variance of the features in the chosen samples. The authors ensure that the classes are balanced by taking only 100 songs from each artist, however, they don’t explain how the songs were selected, which could highly affect the accuracy, considering that the artist’s style may change over time. 
+
+In conclusion, Rosebaugh and Shamir’s article lays a good foundation for future research in lyric analysis and demonstrates the viability of the metrics proposed by the UDAT tool in the music context. While the lack of a scientific objective in the analysis makes its conclusions scarcely applicable, it still acts as an example use of data science techniques for other endeavours. However, before using these methodologies, all researchers should consider their limitations, which are scarcely described in the article.
+
+
+<b>References </b>
+
+Rosebaugh, Caleb, and Lior Shamir. “Data Science Approach to Compare the Lyrics of Popular Music Artists.” Unisia, 3 July 2022, pp. 1–26, https://doi.org/10.20885/unisia.vol40.iss1.art1. Accessed 14 Dec. 2022.
+
+Shamir, Lior. “UDAT: Compound Quantitative Analysis of Text Using Machine Learning.” Digital Scholarship in the Humanities, vol. 36, no. 1, 13 Mar. 2020, pp. 187–208, https://doi.org/10.1093/llc/fqaa007. Accessed 11 Nov. 2022.
+
+### Cultural adoption {.tabeset}
+
+#### <b>Music listening and cultural adaptation: How different languages of songs affect Chinese international students’ uses of music and cultural adaptation in the United States </b>
+
+Ignacy Walus
+
+The relation between music and language is without a doubt a complex one. On the one hand, language has a great influence on music, affecting its style, and having profound impact on its listeners. On the other hand, music may be considered to influence acquiring language skills. Furthermore, this may lead to the role of music – and its language – in adopting cultural customs as well. Such relation, between the fields of music listening and cultural adaptation, is studied by Jia and Koku in their article on the role of music in the integration of Chinese students in the United States. In this paper, I will review their work, by summarizing and evaluating their research.
+
+The article at issue is based on four research questions, that together aim to examine what role English and Chinese music plays in the process of acculturation of Chinese international students in the United States. Firstly, the authors try to find if various genres of music influence different uses of music – for mood regulation, and identity building, among others. Secondly, they examine how the language of music – Chinese or English – affects these various uses. Thirdly, they study the implications of the language of music Chinese students listen to every day on their cultural adaptation. Lastly, they discuss whether this effect differs by uses of music. 
+	
+The findings of the article Jia and Koku are based on self-reported research the authors conducted among the Chinese international students in the United States. The final sample group consisted of 256 students from three universities.  The survey contained questions concerning not only the language or type of music Chinese students listened to every day, and its primary use, but also questions relating to demographic facts (on gender, length of stay in the US), and asking how frequently specific music was listened to by them.  
+	
+The results presented by the authors of the article reveal numerous interesting facts concerning the relation between everyday music and cultural adaptation. The research shows, that while the type of music genre has no significant effect on different use of music, listening to music in either Chinese or English predicts its certain usage.  While English music primarily serves for entertainment and identity building, Chinese music is used for negative mood management. This leads to the authors’ argument, that for bilingual listeners, songs in their native language serve for this very purpose of mood management – on the other hand, the non-native language songs have entertaining goal.  Further, the authors observe, that since English songs positively affect Chinese students’ acculturation, they emerge as a means to help them “forge new identities”.  Jia and Koku find that frequent listening to English songs for the goal of identity building is pivotal in developing Chinese students’ integration in the American society – but needs to be further strengthened by their own identification with the music itself.  Importantly, the authors also stress the limitations to their study that concern the small number of participants in the survey, and the question of applicability of its results to the other groups of international students. They point out that further questions on this research remain to be examined.
+	
+“Music listening and cultural adaptation…” emerges as an important article in the field of studying music listening and its impact on individuals. The research conducted by Jia and Koku contributes to it by displaying not only how listening to music can be used for cultural adaptation in a new country, but also by showing how important the role of the language of this music itself is. Furthermore, the article studies a topic that is relatable to most of the international students that move abroad to a country that is to some degree culturally different that their home state. It shows that integration is conducted not only externally – via contacts with friends, local culture – but also internally, through our own personal activities, such as everyday music listening. The article has an additional value, if we consider the fact, that we live in a world where mobility takes precedence, and thus, the “necessity” of cultural adaptation is common. And as it is shown, music listening might play a more and more significant role in this process. The article needs to be further praised for its relevant and interesting findings – e.g. pointing out that Chinese songs primarily serve for negative mood management of students. While some of the other results might be considered as not surprising, they are nevertheless crucial to examine the process of students’ acculturation.
+	
+However, the article also has significant drawbacks. The first, and the most obvious one, is the small size of the sample group. While the authors are conscious of this limitation, as they point out at the end that the results shall not be generalized for the whole population of Chinese students in America, numerous findings and arguments stated throughout the text appear as very general and applicable to not only Chinese, but many other international students concerned with cultural adaptation. More emphasis should have been put on this limitation, to provide clear “barriers” to the applicability of the findings. Further, the design of the research can be considered as limited, which may be to the detriment of the accuracy of the results. Namely, the findings to the first research question concerning relations between genres and uses of music are based on a small number of categories of genres – these are collapsed to five with the highest number of responses (Chinese pop, Chinese others, American pop, American others, and music from other countries).  While this gives more clarity, fragmenting these categories may provide for different results – and genres may indeed be found to influence various uses of music. Lastly, it needs to be pointed out, that the study largely concerns English music, which dominates the music industry worldwide. Therefore, the findings that listening to non-native music predicts use of music for identity building  should be approached carefully. English music may indeed influence the integration in English-speaking countries. However, it is rather doubtful that it serves the same purposes in non-English speaking states, where, due to its omnipresence, it would be still one of the most (if not the most) popular genres.
+	
+The article by Jia and Koku is without a doubt an important starting point in a debate over relation between music and language, and music’s role in cultural assimilation. As outlined, it contains drawbacks, that should be dealt with in the future academic works. And as the topic is far from being exhausted, further studies on it shall only be a matter of time. 
+
+Bibliography
+1.	Jia, Fei, Emmanuel Koku. “Music listening and cultural adaptation: How different languages of songs affect Chinese international students’ uses of music and cultural adaptation in the United States”. Journal of International and Intercultural Communication 13. No. 4 (2020). 291-308.
+
+### Tonality and speech {.tabeset}
+
+#### <b>Article Review: Co-Variation of Tonality in the Music and Speech of Different Cultures </b>
+
+Tomer Shor
+
+Music is often considered to be the universal language, despite the fact that the traditional music and underlying musical theory of various cultures differs greatly. The differences between traditional Western and Eastern music, especially in regard to pitch and tonal usage, have long been recognized, both in scholarly literature and music theory. Similarly, pitch usage also varies greatly between languages, which, accordingly, might be grouped as "tonal" or "non-tonal" languages. Whereas in tonal languages the pitch contours affect and convey the meaning of the spoken word, non-tonal languages share no such features, and variations of pitch or relative level do not typically alter the meanings of words. 
+
+With these differences in mind, Han et al. sought to answer the following question – is there a connection between the two phenomena? Is there a correlation between the tonal characteristics of the music and the speech patterns of specific cultures? In order to investigate their hypothesis – that said correlation does indeed exist – the authors examined 50 traditional melodies of tone language cultures – Mandarin, Thai, and Vietnamese – and 50 comparable melodies from non-tone language cultures – American, French and German. Additionally, the authors commissioned the recording of monologues read by native speakers of all six languages, instructing them to speak as if they were engaged in normal conversation. The melodies and speech recordings were then analyzed in terms of the frequency of slope reversals (changes in pitch direction), and the size of the melodic intervals used. The results of said analyses were subsequently used to compare the frequency of slope reversals: the music of tonal languages to the music of non-tonal languages, and the speech of tonal languages to that of non-tonal ones. A similar, four-way comparison was conducted with the results of the melodic interval analysis.
+
+The results of the research seem to support the authors' initial hypothesis. Both the speech and the music of tonal languages displayed higher frequencies of slope reversals compared to those of non-tonal languages; similarly – while the distribution of interval size between tonal and non-tonal languages was not as skewed as the distribution of slope reversals – there was a substantial difference in distribution between the two languages groups, with speech and music displaying parallel tendencies. These results lead the authors to conclude that there exists an intimate relationship between language and music, manifested in tonal distinction between the music of tonal and non-tonal languages, that parallels the distinctions between the languages.
+
+However, in their discussion of the results, the authors reach conclusions that seem unsupported by the data – namely, that the variations in aesthetic preferences between cultures is explained in terms of biology. While this is a plausible explanation, nowhere in the article are those biological differences explicated. Nor is it the only possible explanation: while biological differences – either innate or brought about by historical and material conditions – certainly might explain the variations in tonal usage, it is also possible that a musical Sappir-Whorf theory of sorts is at play here. Sappir-Whorf theory, or the linguistic relativity hypothesis, claims that the language an individual speaks fundamentally affects and alters their perception of the world. A similar claim might be made about music and language – that the language of a culture inherently affects the type of music produced by that culture and its properties – and/or vice versa. In fact, this claim is supported by the authors' data, and the characteristics of the relation between language and music within each culture is discussed in the article, e.g., in relation to scale. Traditional Eastern music tends to employ pentatonic (five-tone) scales, while traditional Western music tends to use heptatonic (seven-tone) scales, leading Han et al. to posit that the difference in scale use, rather than being simply an aesthetic one, reflects the desire to mirror the melodic intervals used in speech. This explanation, however, is at odds with the authors' conclusion regarding biological differences – if the cause of tonal differences in language is a biological one, why would the tonal differences in music not stem from the same source? In other words – is it the language that shapes the music, the music that shapes the language, or rather a third variable (biological or otherwise) that shapes both?
+
+This criticism is further grounded in the methods of the study: in order to mitigate possible cross-cultural contamination regarding music, the authors specifically chose melodies that pre-date 1900, preferably by hundreds of years. Yet, for the speech analysis part, the authors commissioned recordings by current-day language speakers. Thus, the two sets of comparison materials are not equivalent, with the musical dataset being comprised of tunes that are hundreds of years old – tunes that native speakers are probably familiar with, and, after decades of being in the zeitgeist of each respective culture, could have had an influence on certain cultural and language tendencies. Similarly, the languages themselves might have undergone certain changes during that period – speech patterns change over them, invariably affecting the tendencies of slope reversals and the interval size of spoken language. For the comparison to be fair and accurate, it ought to either feature contemporary tunes, or historical recordings from the periods of the tunes selected – although that, obviously, creates its own set of complications.
+
+Despite these points of contention, Han et al. provide a valuable addition to the study of music and language. Speech and music are both essential modes of expression, shared by all people across all cultures. It is precisely because of this that it is so important to investigate the differences between and within these modes of expression, and to try and highlight the similarities. While many musical cultures and their subsequent use of scales appears to converge around the harmonic scale , indicating a biological underpinning to our musical preferences – differences between musical cultures are still abundant, suggesting further mechanisms that influence aesthetic outcomes. Han et al.'s contribution is a first step in trying to unearth these mechanisms, focused on language. While further research is warranted  – both in comparisons between tonal and non-tonal languages, and of tonal languages to other tonal languages and non-tonal languages to other non-tonal languages – this article makes clear that the interplay between music and language exists, is empirically observable – and has a lot to teach us about ourselves and our cultures.
+
+Bibliography
+Han S, Sundararajan J, Bowling DL, Lake J, Purves D (2011) Co-Variation of Tonality in the Music and Speech of Different Cultures. PLoS ONE 6(5): e20160. https://doi.org/10.1371/journal.pone.0020160
+Gill KZ, Purves D (2009) A Biological Rationale for Musical Scales. PLoS ONE 4(12): e8144. doi:10.1371/journal.pone.0008144
+Bowling DL, Sundararajan J, Han S, Purves D (2012) Expression of Emotion in Eastern and Western Music Mirrors Vocalization. PLoS ONE 7(3): e31942. https://doi.org/10.1371/journal.pone.0031942
+
+Example lyrics with scores {data-navmenu="Background" data-orientation=rows}
+=======================================================================
+
+Row 
+-----------------------------------------------------------------------
+
+### High readability
+
+Artist: Little Big	
+
+Song: Go Bananas
+
+Linsear Write Formula: 3.17
+
+Sentiment: 0.64
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+
+
+Now (Oop! Oop!)
+
+Oh let me see you go ba-na-nas (Oop! Oop!)
+
+Oh let me see you go
+
+
+
+
+I'm gonna nuts right now
+
+I'm gonna, I'm gonna fruits right now (Oop!)
+
+I'm gonna lose ma mind
+
+I'm gonna, I'm gonna lose my mind (Oop!)
+
+Go bananas, be like Banana Man
+
+Go bananas, be like Banana Man
+
+Go bananas, be like Banana Man
+
+Go bananas, be (Oop! Oop!) like Banana Man
+
+
+
+
+Bana-nana-nana-na na-na
+
+Bana-nana-nana-na na-na
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na
+
+Bana-nana-nana-na na-na
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+You might also like
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+
+
+
+I'm Banana Man
+
+Banana
+
+Banana
+
+I'm Banana, I'm Banana Man (Banana)
+
+I'm Banana, I'm Banana Man (Banana)
+
+I'm Banana, I'm Banana Man (Banana)
+
+I'm Banana (I'm Banana, I'm Banana Man)
+
+
+
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+Bana-nana-nana-na na-na (Ay!)
+
+Bana-nana-nana-na na-na (Now!)
+
+Bana-nana-nana-na na-na
+
+Ya! I'm Banana Man
+
+
+### Low readability
+
+Artist: Lana Del Rey
+
+Song: Ultraviolence	
+
+Linsear Write Formula: 58
+
+Sentiment: 0.18
+
+
+He used to call me DN
+
+That stood for Deadly Nightshade
+
+'Cause I was filled with poison
+
+But blessed with beauty and rage
+
+Jim told me that, he hit me and it felt like a kiss
+
+Jim brought me back, reminded me of when we were kids
+
+
+
+With his ultraviolence
+
+Ultraviolence
+
+Ultraviolence
+
+Ultraviolence
+
+I can hear sirens, sirens
+
+He hit me and it felt like a kiss
+
+I can hear violins, violins
+
+Give me all of that ultraviolence
+
+
+
+
+He used to call me poison
+
+Like I was poison ivy
+
+I could have died right there
+
+'Cause he was right beside me
+
+Jim raised me up, he hurt me but it felt like true love
+
+Jim taught me that, loving him was never enough
+
+You might also like
+
+With his ultraviolence
+
+Ultraviolence
+
+Ultraviolence
+
+Ultraviolence
+
+I can hear sirens, sirens
+
+He hit me and it felt like a kiss
+
+I can hear violins, violins
+
+Give me all of that ultraviolence
+
+
+
+
+
+We could go back to New York
+
+Loving you was really hard
+
+We could go back to Woodstock
+
+Where they don't know who we are
+
+Heaven is on Earth
+
+I would do anything for you, baby
+
+Blessed is this union
+
+Crying tears of gold like lemonade
+
+
+
+
+I love you the first time, I love you the last time
+
+Yo soy la princesa, comprende mis white lines
+
+'Cause I'm your jazz singer and you're my cult leader
+
+I love you forever, I love you forever
+
+
+
+With his ultraviolence (Lay me down tonight)
+
+Ultraviolence (In my linen and curls)
+
+Ultraviolence (Lay me down tonight)
+
+Ultraviolence (Riviera Girls)
+
+I can hear sirens, sirens
+
+He hit me and it felt like a kiss
+
+I can hear violins, violins
+
+Give me all of that ultraviolence
+
+
+### Low sentiment
+Artist: Coldplay
+
+Song: Amsterdam	
+
+Linsear Write Formula: 50
+
+Sentiment: -0.24
+
+Come on, oh, my star is fadin'
+
+And I swerve out of control
+
+And if I, oh, if I'd only waited
+
+I'd not be stuck here in this hole
+
+
+
+
+Come here, oh, my star is fadin'
+
+And I swerve out of control
+
+And I swear I waited and waited
+
+I've got to get out of this hole
+
+
+
+
+But time is on your side
+
+It's on your side now
+
+Not pushin' you down and all around
+
+It's no cause for concern
+
+
+
+
+Come on, oh, my star is fadin'
+
+And I see no chance of release
+
+And I know I'm dead on the surface
+
+But I am screamin' underneath
+
+
+
+
+And time is on your side
+
+It's on your side now
+
+Not pushin' you down and all around, oh
+
+It's no cause for concern
+
+You might also like
+
+Stuck on the end of this ball and chain
+
+And I'm on my way back down again
+
+Stood on a bridge, tied to a noose
+
+Sick to the stomach
+
+You can say what you mean, but it won't change a thing
+
+I'm sick of the secrets
+
+Stood on the edge, tied to the noose
+
+And you came along and you cut me loose
+
+You came along and you cut me loose
+
+You came along and you cut me loose
+
+
+### High sentiment
+Artist: Troye Sivan
+
+Song: Rush	
+
+Linsear Write Formula: 28
+
+Sentiment: 0.43
+
+I feel the rush
+
+Addicted to your touch
+
+
+
+Big communication, tell me what you want
+
+Translate your vibration, let your body talk to me
+
+Baby love, if you wanna show me what
+
+You've been schemin' up, if you wanna (Let go)
+
+Trust the simulation, don't you let it break
+
+Every stimulation, promise I can take
+
+What you wanna give? Boy, you better show me what
+
+You've been schemin' up
+
+
+
+
+You got my heartbeat racin'
+
+My body blazin'
+
+
+I feel the rush
+
+Addicted to your touch
+
+Oh, I feel the rush
+
+It's so good, it's so good
+
+I feel the rush
+
+Addicted to your touch
+
+Oh, I feel the rush
+
+It's so good, it's so good
+
+You might also like
+
+So good when we slow gravity, so good
+
+It's so good, it's so good
+
+Breathe one, two, three, take all of me, so good
+
+It's so good, it's so good
+
+
+
+
+Pass your boy the heatwave, recreate the sun
+
+Take me to the feeling, boy, you know the one
+
+Kiss it when you're done, man, this shit is so much fun
+
+Pocket rocket gun
+
+
+
+
+You got my heartbeat (Heartbeat) racin' (Racin')
+
+My body blazin'
+
+
+
+
+I feel the rush
+
+Addicted to your touch
+
+Oh, I feel the rush
+
+It's so good, it's so good
+
+I feel the rush
+
+Addicted to your touch
+
+Oh, I feel the rush
+
+It's so good, it's so good
+
+
+
+So good when we slow gravity, so good
+
+It's so good, it's so good
+
+Breathe one, two, three, take all of me, so good
+
+It's so good, it's so good
+
+
+
+
+It's so good, it's so good
+
+It's so good, it's so good
+
+Chosen metric correlations {data-navmenu="Extras"}
 =======================================================================
 
 
@@ -563,7 +1087,7 @@ p <- pairs.panels(df_sub,
 # Print the plot
 ggplotly(p)          
 ```
-Word frequencies {data-navmenu="Extra Graphs"}
+Word frequencies {data-navmenu="Extras"}
 =======================================================================
 Column {data-width=800}
 -----------------------------------------------------------------------
@@ -620,7 +1144,7 @@ word_freq_df = read.csv("word_frequencies.csv")
 rownames(word_freq_df) <- word_freq_df$X
 word_freq_df = subset(word_freq_df, select=-c(X))
 # Create a wordcloud2
-w <- wordcloud2(data = head(word_freq_df,1000), size = 0.85, widgetsize =c("1300","1000"))    
+w <- wordcloud2(data = head(word_freq_df,1000), size = 0.75, widgetsize =c("1000","700"))    
 w
 ```
 
@@ -636,7 +1160,7 @@ library(knitr)
 knitr::kable(head(word_freq_df['freq'],500))
 ```
 
-Word frequencies (not included) {data-navmenu="Extra Graphs"}
+Word frequencies (not included) {data-navmenu="Extras"}
 =======================================================================
 Column {data-width=800}
 -----------------------------------------------------------------------
@@ -696,3 +1220,4 @@ Column {data-width=200}
 library(knitr)
 knitr::kable(head(word_freq_df2['freq'],500))
 ```
+
